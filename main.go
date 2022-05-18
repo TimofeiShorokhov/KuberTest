@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/joho/godotenv"
 	"kuber/controllers"
@@ -8,9 +9,27 @@ import (
 	"net/http"
 )
 
+var (
+	flagVar     string
+	AnotherFlag bool
+	getFlag     bool
+	putFlag     bool
+)
+
+//Creating and parsing flags
+func init() {
+	flag.StringVar(&flagVar, "d", "", "print text")
+	flag.BoolVar(&AnotherFlag, "y", false, "another func")
+	flag.BoolVar(&getFlag, "g", false, "get from db")
+	flag.BoolVar(&putFlag, "p", false, "put data in db")
+	flag.Parse()
+}
+
 func main() {
+
 	var err error
 	err = godotenv.Load()
+
 	if err != nil {
 		log.Fatalf("Error getting env, %v", err)
 	} else {
@@ -18,7 +37,9 @@ func main() {
 	}
 
 	router := controllers.InitRoutes()
+	controllers.CallFunc(flagVar, AnotherFlag, getFlag, putFlag)
 	log.Fatal(http.ListenAndServe(":8080", router))
+
 	//_, err = db.Exec("Insert into shasum(file, file_path, checksum, algorithm) VALUES ('sda','dsa1','fdas','md5')")
 
 }

@@ -32,10 +32,3 @@ spec:
           ports:
             - containerPort: 5432                   # The port that the container exposes
               name: postgres
-          volumeMounts:
-            - mountPath: /var/lib/postgresql/14
-              name: postgres-persistent-storage     # This name should match the name specified in `volumes.name`
-      volumes:                                      # A PersistentVolume is mounted as a volume to the Pod
-        - name: postgres-persistent-storage
-          persistentVolumeClaim:
-            claimName: postgres-pv-claim
