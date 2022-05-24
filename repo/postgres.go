@@ -1,6 +1,9 @@
 package repo
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
+	"io"
 	"log"
 	"os"
 )
@@ -29,4 +32,22 @@ func PutTable() string {
 	}
 	res := "Succesful creation of table"
 	return res
+}
+
+func HashOfFile(path string) string {
+
+	file, err := os.Open(path)
+	if err != nil {
+		return "error with open file"
+	}
+
+	defer file.Close()
+
+	result := sha256.New()
+	_, err = io.Copy(result, file)
+
+	if err != nil {
+		return "error with hash creation"
+	}
+	return hex.EncodeToString(result.Sum(nil))
 }

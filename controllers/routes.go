@@ -9,6 +9,7 @@ func InitRoutes() *mux.Router {
 	r.HandleFunc("/put", PutData).Methods("GET")
 	r.HandleFunc("/get", GetData).Methods("GET")
 	r.HandleFunc("/home", Home).Methods("GET")
+	r.HandleFunc("/hash", GetHash).Methods("GET")
 
 	return r
 }

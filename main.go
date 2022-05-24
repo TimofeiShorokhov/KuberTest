@@ -14,6 +14,7 @@ var (
 	AnotherFlag bool
 	getFlag     bool
 	putFlag     bool
+	hash        string
 )
 
 //Creating and parsing flags
@@ -22,6 +23,7 @@ func init() {
 	flag.BoolVar(&AnotherFlag, "y", false, "another func")
 	flag.BoolVar(&getFlag, "g", false, "get from db")
 	flag.BoolVar(&putFlag, "p", false, "put data in db")
+	flag.StringVar(&hash, "h", "", "resolving hash of file")
 	flag.Parse()
 }
 
@@ -35,9 +37,8 @@ func main() {
 	} else {
 		fmt.Println("We are getting the env values")
 	}
-
+	controllers.CallFunc(flagVar, AnotherFlag, getFlag, putFlag, hash)
 	router := controllers.InitRoutes()
-	controllers.CallFunc(flagVar, AnotherFlag, getFlag, putFlag)
 	log.Fatal(http.ListenAndServe(":8080", router))
 
 	//_, err = db.Exec("Insert into shasum(file, file_path, checksum, algorithm) VALUES ('sda','dsa1','fdas','md5')")
