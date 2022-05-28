@@ -14,7 +14,7 @@ spec:
         command: ["sh","-c","./main $FLAG $TEXT"]
         env:
           - name: FLAG
-            value: "-g"
+            value: "-p"
         ports:
           - name: http
             containerPort: 8080                   # Should match the port number that the Go application listens on

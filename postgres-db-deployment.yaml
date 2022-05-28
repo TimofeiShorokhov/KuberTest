@@ -24,11 +24,9 @@ spec:
             postStart:
               exec:
                 command: [ "/bin/sh","-c","sleep 20 && PGPASSWORD=$POSTGRES_PASSWORD psql -w -d $POSTGRES_DB -U $POSTGRES_USER -c 'CREATE TABLE IF NOT EXISTS shasum (id        bigserial primary key, file      text                                                 not null,checksum  text                                                 not null,file_path text,algorithm text                                                 not null,deleted   boolean default false                                not null,constraint shasum_unique unique (file_path, algorithm));'" ]
-
           envFrom:                                # Get the environmental variables from a secret file whose name is "postgres-secret"
             - secretRef:
                 name: postgres-secret
-
           ports:
             - containerPort: 5432                   # The port that the container exposes
               name: postgres
